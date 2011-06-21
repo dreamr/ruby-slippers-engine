@@ -48,12 +48,6 @@ context RubySlippers::Engine do
     setup { @ruby_slippers.get('/about') }
     asserts("returns a 200")                { topic.status }.equals 200
     asserts("body is not empty")            { not topic.body.empty? }
-    
-    context "when the about page is empty" do
-      path = File.expand_path("../../../README.md", __FILE__)
-      readme = File.open(path).read
-      asserts("body is readme") { topic.body }.includes "To set up a new blog"
-    end
   end
 
   context "GET to an unknown route with a custom error" do

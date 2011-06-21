@@ -21,18 +21,6 @@ module RubySlippers
 
       def render page, type
         content = to_html page, @config
-        if page == :about && content == ""
-          path = "../../../README.md"
-          markup = File.open(File.expand_path(path, __FILE__)).read
-          markup.gsub! (<<-EOS
-RubySlippers, the smartest blogging engine in all of Oz!
-========================================================
-
-[website](http://ruby-slippers.heroku.com)
-          EOS
-          ), ''
-          content = markdown(markup)
-        end
         type == :html ? to_html(:layout, @config, &Proc.new { content }) : send(:"to_#{type}", page)
       end
 
