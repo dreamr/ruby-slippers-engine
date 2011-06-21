@@ -6,11 +6,7 @@ RubySlippers, the smartest blogging engine in all of Oz!
 Introduction
 ------------
 
-
-For Developers
---------------
-
-#### To set up a new blog
+### To set up a new blog
 
     $ git clone git://github.com/dreamr/ruby-slippers.git myblog
     $ cd myblog
@@ -22,7 +18,7 @@ For Developers
     $ Blog installed!
     
     
-#### To create an article
+### To create an article
 
     $ rake new
     $ -> Title: My new blog post!
