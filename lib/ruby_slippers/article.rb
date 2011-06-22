@@ -74,7 +74,8 @@ module RubySlippers
       end
       
       def full_image_path
- self[:date].strftime("/img/articles/%Y/%B/#{self[:image]}").downcase
+        return nil unless self[:image]
+        self[:date].strftime("/img/articles/%Y/%B/#{self[:image]}").downcase
       end
       
       def has_more?
