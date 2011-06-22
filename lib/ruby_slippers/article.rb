@@ -84,7 +84,7 @@ module RubySlippers
       
       def read_more_link()
         return "" unless has_more?
-        "<div class=\"more-link\"><a href=\"<%= article.path %>\">read on &raquo;</a></div>"
+        "<div class=\"more-link\"><a href=\"#{article.path}\">read on &raquo;</a></div>"
       end
       
       def title()     self[:title] || "an article"                end
