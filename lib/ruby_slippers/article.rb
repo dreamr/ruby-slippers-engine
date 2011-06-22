@@ -72,13 +72,18 @@ module RubySlippers
           "<a href=\"/tagged/#{tag.strip.slugize}\">#{tag.strip.humanize.downcase}</a>"
         end.join(@config[:tag_separator])
       end
+      
+      def full_image_path
+ self[:date].strftime("/img/articles/%Y/%B/#{self[:image]}").downcase
+      end
   
       def title()     self[:title] || "an article"                end
       def date()      @config[:date].call(self[:date])            end
       def author()    self[:author] || @config[:author]           end
-      def image_src() self[:image]                                end
+      def image_src() full_image_path                             end
       def to_html()   self.load; super(:article, @config)         end
       alias :to_s to_html
+      
     end
   end
 end

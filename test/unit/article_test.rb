@@ -48,7 +48,7 @@ context RubySlippers::Engine::Article do
         :slug   => "wizard-of-oz",
         :author => "toetoe",
         :tags   => "wizards, oz",
-        :image  => "img/articles/2011/may/ozma.png"
+        :image  => "ozma.png"
       }, @config)
     end
 
@@ -57,7 +57,7 @@ context RubySlippers::Engine::Article do
     should("use the author")  { topic.author }.equals "toetoe"
     should("have tags")       { topic.tags }.equals "wizards, oz"
     should("have tag links")  { topic.tag_links }.equals "<a href=\"/tagged/wizards\">wizards</a>, <a href=\"/tagged/oz\">oz</a>"
-    should("have an image")   { topic.image_src }.equals "img/articles/2011/may/ozma.png"
+    should("have an image")   { topic.image_src }.equals "/img/articles/1976/october/ozma.png"
 
     context "and long first paragraph" do
       should("create a valid summary") { topic.summary }.equals "<p>" + ("a little bit of text." * 5).chop + "&hellip;</p>\n"
