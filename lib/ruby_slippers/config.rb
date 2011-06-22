@@ -14,7 +14,7 @@ class RubySlippers::Engine::Config < Hash
     :tag_separator => ', ',                               # tag separator for articles
     :github => {:user => "dreamr", :repos => [], :ext => 'md'}, # Github username and list of repos
     :to_html => lambda {|path, page, ctx|                 # returns an html, from a path & context
-      ERB.new(File.read("#{path}/#{page}.rhtml")).result(ctx)
+      ERB.new(File.read("#{path}/#{page}.html.erb")).result(ctx)
     },
     :error => lambda {|code|                              # The HTML for your error page
       "<font style='font-size:300%'>A large house has landed on you. You cannot continue because you are dead. <a href='/'>try again</a> (#{code})</font>"
