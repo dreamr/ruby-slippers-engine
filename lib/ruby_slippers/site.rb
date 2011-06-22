@@ -12,6 +12,13 @@ module RubySlippers
       def []= key, value
         @config.set key, value
       end
+      
+      def sitemap type = :xml
+        articles = type == :html ? self.articles.reverse : self.articles
+        {:articles => articles.map do |article|
+          Article.new article, @config
+        end}.merge archives
+      end
 
       def index type = :html
         articles = type == :html ? self.articles.reverse : self.articles
