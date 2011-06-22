@@ -43,7 +43,7 @@ module RubySlippers
         else
           self[:body].match(/(.{1,#{length || config[:length] || config[:max]}}.*?)(\n|\Z)/m).to_s
         end
-        markdown(sum.length == self[:body].length ? sum : sum.strip.sub(/\.\Z/, '&hellip;'))
+        markdown(sum.length >= self[:body].length-1 ? sum : sum.strip.sub(/\.\Z/, '&hellip;'))
       end
 
       def url
@@ -76,7 +76,16 @@ module RubySlippers
       def full_image_path
  self[:date].strftime("/img/articles/%Y/%B/#{self[:image]}").downcase
       end
-  
+      
+      def has_more?
+        self[:body].length > self.summary.length
+      end
+      
+      def read_more_link()
+        return "" unless has_more?
+        "<div class=\"more-link\"><a href=\"<%= article.path %>\">read on &raquo;</a></div>"
+      end
+      
       def title()     self[:title] || "an article"                end
       def date()      @config[:date].call(self[:date])            end
       def author()    self[:author] || @config[:author]           end

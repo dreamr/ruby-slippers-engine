@@ -8,6 +8,17 @@ context RubySlippers::Engine::Article do
     @config[:summary] = {:length => 50}
     @config[:tag_separator] = ", "
   end
+  
+  context "when the article body and summary are the same" do
+    setup do
+      RubySlippers::Engine::Article.new({
+        :title => "Dorothy & The Wizard of Oz.",
+        :body => "#Chapter I\nhello, *stranger*. ~"
+      }, @config)
+    end
+    should("not have a read_more_link")           { topic.read_more_link == "" }
+    should("not end in ...")           { topic.summary !~ /&hellip;<\/p>/ }
+  end
 
   context "with the bare essentials" do
     setup do
@@ -58,6 +69,8 @@ context RubySlippers::Engine::Article do
     should("have tags")       { topic.tags }.equals "wizards, oz"
     should("have tag links")  { topic.tag_links }.equals "<a href=\"/tagged/wizards\">wizards</a>, <a href=\"/tagged/oz\">oz</a>"
     should("have an image")   { topic.image_src }.equals "/img/articles/1976/october/ozma.png"
+    should("have a read_more_link")   { topic.read_more_link =~ /more-link/ }
+    should("end in ...")          { topic.summary =~ /&hellip;<\/p>/ }
 
     context "and long first paragraph" do
       should("create a valid summary") { topic.summary }.equals "<p>" + ("a little bit of text." * 5).chop + "&hellip;</p>\n"
