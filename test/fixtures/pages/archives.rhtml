@@ -1,5 +1,11 @@
 <h1><%= @path %></h1>
-<% for entry in archives %>
-  <li class="entry"><%= entry.title %></li>
-<% end %>
+<ul>
+  <% if archives.length > 0 %>
+    <% for article in archives %>
+      <li class="article">
+        <a href="<%= article.path %>"><%= article.title %></a>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
 

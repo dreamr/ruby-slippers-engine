@@ -3,7 +3,7 @@
 <% unless articles.empty? %>
   <ul>
     <% for article in articles %>
-      <li class="entry"><a href="<%= article.url %>"><%= article.title %></a></li>
+      <li class="article"><a href="<%= article.url %>"><%= article.title %></a></li>
     <% end %>
   </ul>
 <% end %>
