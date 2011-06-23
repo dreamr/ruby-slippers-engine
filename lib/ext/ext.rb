@@ -35,6 +35,12 @@ class Fixnum
   end
 end
 
+class Object
+  def blank?
+    self.nil? || self == ""
+  end
+end
+
 class Date
   # This check is for people running RubySlippers::Enginewith ActiveSupport, avoid a collision
   unless respond_to? :iso8601

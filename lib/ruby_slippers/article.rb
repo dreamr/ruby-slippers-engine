@@ -67,7 +67,7 @@ module RubySlippers
       end
   
       def tag_links
-        return [] unless self[:tags]
+        return '' unless self[:tags]
         self[:tags].split(',').collect do |tag|
           "<a href=\"/tagged/#{tag.strip.slugize}\">#{tag.strip.humanize.downcase}</a>"
         end.join(@config[:tag_separator])
@@ -78,13 +78,8 @@ module RubySlippers
         self[:date].strftime("/img/articles/%Y/%B/#{self[:image]}").downcase
       end
       
-      def has_more?
+      def has_more_then_summary?
         self[:body].length > self.summary.length
-      end
-      
-      def read_more_link()
-        return "" unless has_more?
-        "<div class=\"more-link\"><a href=\"#{article.path}\">read on &raquo;</a></div>"
       end
       
       def title()     self[:title] || "an article"                end
