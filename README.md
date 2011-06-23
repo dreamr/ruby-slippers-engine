@@ -1,5 +1,8 @@
+README
+======
+
 RubySlippers, the smartest blogging engine in all of Oz!
-========================================================
+--------------------------------------------------------
 
 [website](http://ruby-slippers.heroku.com)
 
@@ -54,19 +57,22 @@ RubySlippers comes with a basic default theme for you to mangle. I hope to relea
 Deployment
 ==========
 
-#### on heroku
+#### On heroku
+    
+    $ git add .
+    $ git commit -m 'updated blog'
+    $ git push heroku
 
-RubySlippers comes with a basic rackup file. To start it up locally do:
+#### On your own server or locally
+
+Once you have created the remote git repo, and pushed your changes to it, you can run RubySlippers with any Rack compliant web server, such as **thin**, **mongrel** or **unicorn**.
+
+I like to use shotgun as it reloads while I work
 
     $ cd myblog
     $ bundle
     $ shotgun
-    [2011-06-20 17:04:46] INFO  WEBrick::HTTPServer#start: pid=61628 port=9393
-
-#### on your own server
-
-Once you have created the remote git repo, and pushed your changes to it, you can run RubySlippers with any Rack compliant web server, such as **thin**, **mongrel** or **unicorn**.
-
+    
 With thin, you would do something like:
 
     $ thin start -R config.ru
@@ -81,25 +87,31 @@ With unicorn, you can just do:
 You can configure ruby-slippers, by modifying the _config.ru_ file. For example, if you want to set the blog author to 'John Galt',
 you could add `set :author, 'John Galt'` inside the `RubySlippers::Engine::App.new` block. Here are the defaults, to get you started:
 
-    set :author,      ENV['USER']                               # blog author
-    set :title,       Dir.pwd.split('/').last                   # site title
-    set :url,         'http://example.com'                      # site root URL
-    set :prefix,      ''                                        # common path prefix for all pages
-    set :root,        "index"                                   # page to load on /
-    set :date,        lambda {|now| now.strftime("%d/%m/%Y") }  # date format for articles
-    set :markdown,    :smart                                    # use markdown + smart-mode
-    set :disqus,      false                                     # disqus id, or false
-    set :summary,     :max => 150, :delim => /~\n/              # length of article summary and delimiter
-    set :ext,         'txt'                                     # file extension for articles
-    set :cache,       28800                                     # cache site for 8 hours
+    #
+    # Add your settings here
+    # set [:setting], [value]
+    # 
+    set :author,      "Dreamr"                              # blog author
+    set :title,       "RubySlippers, the smartest blog engine in all of Oz!"  # site title
+    # set :root,      "index"                                   # page to load on /
+    set :date,        lambda {|now| now.strftime("%m/%d/%Y") }    # date format for articles
+    # set :markdown,  :smart                                    # use markdown + smart-mode
+    # set :disqus,    false                                     # disqus id, or false
+    set :summary,     :max => 300, :delim => /~/                # length of article summary and delimiter
+    # set :ext,       'txt'                                     # file extension for articles
+    # set :cache,      28800                                    # cache duration, in seconds
+    set :tag_separator, ', '                                    # tag separator for articles
+    set :date, lambda {|now| now.strftime("%B #{now.day.ordinal} %Y") }
+    # set this to your local port. I use shotgun, so 9393.
+    set :url, "http://localhost:9393" if ENV['RACK_ENV'] == 'development'
 
-    set :to_html   do |path, page, ctx|                         # returns an html, from a path & context
-      ERB.new(File.read("#{path}/#{page}.html.erb")).result(ctx)
-    end
-
-    set :error     do |code|                                    # The HTML for your error page
-      "<font style='font-size:300%'>A large house has landed on you. You cannot continue because you are dead. <a href='/'>try again</a> (#{code})</font>"
-    end
+    # to use haml, add the gem to your Gemfile and bundle, then uncomment this
+    # and redo your templates using haml and renamed to html.haml
+    # set :to_html, lambda { |path, page, binding| 
+    #   Haml::Engine.new(File.read("#{path}/#{page}.html.haml"),
+    #   :attr_wrapper => '"',
+    #   :filename => path ).render(binding)
+    # }
 
 Thanks
 ------
