@@ -17,16 +17,16 @@ module RubySlippers
     context "GET /" do
       setup { @ruby_slippers.get('/') }
 
-      asserts("returns a 200")                { topic.status }.equals 200
-      asserts("body is not empty")            { not topic.body.empty? }
+      asserts("return a 200") { topic.status }.equals 200
+      asserts("body is not empty")  { not topic.body.empty? }
       asserts("content type is set properly") { topic.content_type }.equals "text/html"
       should("include 3 articles"){ topic.body }.includes_elements("article", 3)
 
       context "with no articles" do
         setup { Rack::MockRequest.new(RubySlippers::Engine::App.new(@config.merge(:ext => 'oxo'))).get('/') }
 
-        asserts("body is not empty")          { not topic.body.empty? }
-        asserts("returns a 200")              { topic.status }.equals 200
+        asserts("body is not empty") { not topic.body.empty? }
+        asserts("return a 200")    { topic.status }.equals 200
       end
 
       context "with a user-defined to_html" do
@@ -37,19 +37,19 @@ module RubySlippers
           @ruby_slippers.get('/')
         end
 
-        asserts("returns a 200")                { topic.status }.equals 200
-        asserts("body is not empty")            { not topic.body.empty? }
+        asserts("return a 200") { topic.status }.equals 200
+        asserts("body is not empty")  { not topic.body.empty? }
         asserts("content type is set properly") { topic.content_type }.equals "text/html"
         should("include 3 articles"){ topic.body }.includes_elements("article", 3)
-        asserts("Etag header present")          { topic.headers.include? "ETag" }
-        asserts("Etag header has a value")      { not topic.headers["ETag"].empty? }
+        asserts("Etag header present") { topic.headers.include? "ETag" }
+        asserts("Etag header has a value") { not topic.headers["ETag"].empty? }
       end
     end
 
     context "GET /about" do
       setup { @ruby_slippers.get('/about') }
-      asserts("returns a 200")                { topic.status }.equals 200
-      asserts("body is not empty")            { not topic.body.empty? }
+      asserts("return a 200") { topic.status }.equals 200
+      asserts("body is not empty")  { not topic.body.empty? }
     end
 
     context "GET to an unknown route with a custom error" do

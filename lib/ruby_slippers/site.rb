@@ -13,16 +13,20 @@ module RubySlippers
         @config.set key, value
       end
       
+      def articles
+        self.class.articles self[:ext]
+      end
+      
       def sitemap type = :xml
         articles = type == :html ? self.articles.reverse : self.articles
-        {:articles => articles.map do |article|
+   {:articles => articles.map do |article|
           Article.new article, @config
         end}.merge archives
       end
 
       def index type = :html
         articles = type == :html ? self.articles.reverse : self.articles
-        {:articles => articles.map do |article|
+   {:articles => articles.map do |article|
           Article.new article, @config
         end}.merge archives
       end
@@ -49,7 +53,7 @@ module RubySlippers
           article[:tags].index(tag.humanize.downcase) if article[:tags]
         end
 
-        {:articles => articles, :tagged => tag}
+   {:articles => articles, :tagged => tag}
       end
 
       def /
@@ -96,10 +100,6 @@ module RubySlippers
 
       def http code
         [@config[:error].call(code), code]
-      end
-
-      def articles
-        self.class.articles self[:ext]
       end
 
       def self.articles ext

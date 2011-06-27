@@ -73,6 +73,13 @@ module RubySlippers
         end.join(@config[:tag_separator])
       end
       
+      def related_articles
+        RubySlippers::Engine::Site.send(:articles, :txt).each do |article|
+          raise article.to_yaml
+          Article.new article, @config
+        end
+      end
+      
       def full_image_path
         return nil unless self[:image]
         self[:date].strftime("/img/articles/%Y/%B/#{self[:image]}").downcase

@@ -16,7 +16,7 @@ module RubySlippers::Engine
     context "GET /index.xml (atom feed)" do
       setup { @ruby_slippers.get('/index.xml') }
       asserts("content type is set properly") { topic.content_type }.equals "application/xml"
-      asserts("body should be valid xml")     { topic.body }.includes_html("feed > entry" => /.+/)
+      asserts("body should be valid xml") { topic.body }.includes_html("feed > entry" => /.+/)
       asserts("summary shouldn't be empty")   { topic.body }.includes_html("summary" => /.{10,}/)
     end
 
