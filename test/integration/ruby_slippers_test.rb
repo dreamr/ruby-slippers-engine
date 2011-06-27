@@ -1,16 +1,16 @@
 require 'support/test_helper'
 require 'date'
 
-module RubySlippers
-  context Engine do
+module RubySlippers::Engine
+  context "Engine" do
     setup do
-      @config = RubySlippers::Engine::Config.new(:markdown => true, :author => AUTHOR, :url => URL)
-      @ruby_slippers = Rack::MockRequest.new(RubySlippers::Engine::App.new(@config))  
+      @config = Config.new(:markdown => true, :author => AUTHOR, :url => URL)
+      @ruby_slippers = Rack::MockRequest.new(App.new(@config))  
       
       if File.expand_path("../../", __FILE__) =~ /engine/
-        RubySlippers::Engine::Paths[:articles]  = "test/fixtures/articles"
-        RubySlippers::Engine::Paths[:templates] = "test/fixtures/templates"
-        RubySlippers::Engine::Paths[:pages]     = "test/fixtures/pages"
+        Paths[:articles]  = "test/fixtures/articles"
+        Paths[:templates] = "test/fixtures/templates"
+        Paths[:pages]     = "test/fixtures/pages"
       end
     end
   
@@ -23,7 +23,7 @@ module RubySlippers
       should("include 3 articles"){ topic.body }.includes_elements("article", 3)
 
       context "with no articles" do
-        setup { Rack::MockRequest.new(RubySlippers::Engine::App.new(@config.merge(:ext => 'oxo'))).get('/') }
+        setup { Rack::MockRequest.new(App.new(@config.merge(:ext => 'oxo'))).get('/') }
 
         asserts("body is not empty") { not topic.body.empty? }
         asserts("return a 200")    { topic.status }.equals 200

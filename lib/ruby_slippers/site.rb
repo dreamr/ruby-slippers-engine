@@ -1,8 +1,13 @@
 module RubySlippers
   module Engine
+  
     class Site
       def initialize config
         @config = config
+      end
+      
+      def config
+        @config
       end
 
       def [] *args

@@ -3,13 +3,13 @@ require 'support/test_helper'
 module RubySlippers::Engine
   context Article do
     setup do
-      @config = RubySlippers::Engine::Config.new(:markdown => true, :author => AUTHOR, :url => URL)
-      @ruby_slippers = Rack::MockRequest.new(RubySlippers::Engine::App.new(@config))
+      @config = Config.new(:markdown => true, :author => AUTHOR, :url => URL)
+      @ruby_slippers = Rack::MockRequest.new(App.new(@config))
 
       if File.expand_path("../../", __FILE__) =~ /engine/
-        RubySlippers::Engine::Paths[:articles]  = "test/fixtures/articles"
-        RubySlippers::Engine::Paths[:templates] = "test/fixtures/templates"
-        RubySlippers::Engine::Paths[:pages]     = "test/fixtures/pages"
+        Paths[:articles]  = "test/fixtures/articles"
+        Paths[:templates] = "test/fixtures/templates"
+        Paths[:pages]     = "test/fixtures/pages"
       end
     end
 
