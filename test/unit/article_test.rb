@@ -8,7 +8,7 @@ module RubySlippers::Engine
       @config[:date] = lambda {|t| "the time is #{t.strftime("%Y/%m/%d %H:%M")}" }
       @config[:summary] = {:length => 50}
       @config[:tag_separator] = ", "
-      RubySlippers::Engine::Site.new(@config)
+      Site.new(@config)
     end
 
     context "article finders" do
@@ -28,7 +28,7 @@ module RubySlippers::Engine
 
     context "when the article body and summary are the same" do
       setup do
-        RubySlippers::Engine::Article.new({
+        Article.new({
           :title => "Dorothy & The Wizard of Oz.",
           :body => "#Chapter I\nhello, *stranger*. ~"
         }, @config)
@@ -38,7 +38,7 @@ module RubySlippers::Engine
 
     context "with the bare essentials" do
       setup do
-        RubySlippers::Engine::Article.new({
+        Article.new({
           :title => "Dorothy & The Wizard of Oz.",
           :body => "#Chapter I\nhello, *stranger*."
         }, @config)
@@ -56,7 +56,7 @@ module RubySlippers::Engine
 
     context "with a user-defined summary" do
       setup do
-        RubySlippers::Engine::Article.new({
+        Article.new({
           :title => "Dorothy & The Wizard of Oz.",
           :body => "Well,\nhello ~\n, *stranger*."
         }, @config.merge(:markdown => false, :summary => {:max => 150, :delim => /~\n/}))
@@ -68,7 +68,7 @@ module RubySlippers::Engine
 
     context "with everything specified" do
       setup do
-        RubySlippers::Engine::Article.new({
+        Article.new({
           :title  => "The Wizard of Oz",
           :body   => ("a little bit of text." * 5) + "\n" + "filler" * 10,
           :date   => "19/10/1976",
@@ -94,7 +94,7 @@ module RubySlippers::Engine
       context "and a short first paragraph" do
         setup do
           @config[:markdown] = false
-          RubySlippers::Engine::Article.new({:body => "there ain't such thing as a free lunch\n" * 10}, @config)
+          Article.new({:body => "there ain't such thing as a free lunch\n" * 10}, @config)
         end
 
         should("create a valid summary") { topic.summary.size }.within 75..80
@@ -104,9 +104,9 @@ module RubySlippers::Engine
     context "in a subdirectory" do
       context "with implicit leading forward slash" do
         setup do
-          conf = RubySlippers::Engine::Config.new({})
+          conf = Config.new({})
           conf.set(:prefix, "blog")
-          RubySlippers::Engine::Article.new({
+          Article.new({
             :title => "Dorothy & The Wizard of Oz.",
             :body => "#Chapter I\nhello, *stranger*."
           }, conf)
@@ -117,9 +117,9 @@ module RubySlippers::Engine
 
       context "with explicit leading forward slash" do
         setup do
-          conf = RubySlippers::Engine::Config.new({})
+          conf = Config.new({})
           conf.set(:prefix, "/blog")
-          RubySlippers::Engine::Article.new({
+          Article.new({
             :title => "Dorothy & The Wizard of Oz.",
             :body => "#Chapter I\nhello, *stranger*."
           }, conf)
@@ -130,9 +130,9 @@ module RubySlippers::Engine
 
       context "with explicit trailing forward slash" do
         setup do
-          conf = RubySlippers::Engine::Config.new({})
+          conf = Config.new({})
           conf.set(:prefix, "blog/")
-          RubySlippers::Engine::Article.new({
+          Article.new({
             :title => "Dorothy & The Wizard of Oz.",
             :body => "#Chapter I\nhello, *stranger*."
           }, conf)
