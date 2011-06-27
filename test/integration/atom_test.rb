@@ -1,7 +1,7 @@
 require 'support/test_helper'
 
 module RubySlippers::Engine
-  context Article do
+  context "Atom Feed" do
     setup do
       @config = Config.new(:markdown => true, :author => AUTHOR, :url => URL)
       @ruby_slippers = Rack::MockRequest.new(App.new(@config))

@@ -1,12 +1,14 @@
 require 'support/test_helper'
 module RubySlippers::Engine
-  context App do
-    setup do
-      App.new.site
-    end
+  context "Site" do
+    context "instance" do
+      setup do
+        App.new.site
+      end
 
-    should("be the same as the singleton") {
-      topic == App.site
-    }
+      should("be the same as the singleton") {
+        topic == App.site
+      }
+    end
   end
 end

@@ -1,7 +1,7 @@
 require 'support/test_helper'
 
 module RubySlippers::Engine
-  context Article do
+  context "Article" do
     setup do
       @config = Config.new(:markdown => true, :author => AUTHOR, :url => URL)
       @config[:markdown] = true
@@ -26,7 +26,7 @@ module RubySlippers::Engine
       end
     end
 
-    context "when the article body and summary are the same" do
+    context "without a body (summary == body)" do
       setup do
         Article.new({
           :title => "Dorothy & The Wizard of Oz.",

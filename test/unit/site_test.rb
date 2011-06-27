@@ -1,7 +1,7 @@
 require 'support/test_helper'
 
 module RubySlippers::Engine
-  context Site do
+  context "Site" do
     setup do
       @config = Config.new(:markdown => true, :author => AUTHOR, :url => URL)
     end

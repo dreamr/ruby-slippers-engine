@@ -67,9 +67,5 @@ module RubySlippers::Engine
         should("create an error page") { topic[:error].call(400) }.equals "error code 400"
       end
     end
-
-    context "extensions to the core Ruby library" do
-      should("respond to iso8601") { Date.today }.respond_to?(:iso8601)
-    end
   end
 end
