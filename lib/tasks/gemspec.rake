@@ -2,7 +2,7 @@ namespace :gem do
   begin
     require 'jeweler'
     Jeweler::Tasks.new do |gem|
-      gem.name = "ruby-slippers"
+      gem.name = "ruby_slippers"
       gem.summary = %Q{the smartest blog-engine in all of Oz}
       gem.description = %Q{A ruby and rack based blog engine for heroku}
       gem.email = "james@rubyloves.me"
