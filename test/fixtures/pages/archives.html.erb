@@ -1,11 +1,23 @@
 <h1><%= @path %></h1>
-<ul>
-  <% if archives.length > 0 %>
-    <% for article in archives %>
-      <li class="article">
-        <a href="<%= article.path %>"><%= article.title %></a>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
 
+<table>
+<% archives.in_groups_of(3, false) do |group| %>
+  <tr>
+    <% if group.length > 0 %>
+      <% for article in group %>
+        <td style="border: 1px solid #ddd; padding: 4px; text-align: center;">
+        <%= 
+          begin;
+          "<div class='archived_article'>"+
+          "<div class='title'>#{article.title}</div>"+
+          "<a href='#{article.url}'><img src='#{article.thumb}' width='200'></img></a>"+
+          "<div class='title'>#{article.date}</div>"+
+          "</div>";
+          rescue;end
+        %>
+      <% end %>
+    </td>
+  <% end %>
+  </tr>
+<% end %>
+</table>
