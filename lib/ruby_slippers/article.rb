@@ -31,10 +31,6 @@ module RubySlippers::Engine
       self.load unless self.tainted?
       super
     end
-    
-    def thumb
-      "/img/archives/#{article.slug}-full.png"
-    end
 
     def slug
       self[:slug] || self[:title].slugize
