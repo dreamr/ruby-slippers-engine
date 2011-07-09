@@ -23,7 +23,8 @@ module RubySlippers::Engine
 
       context "with no articles" do
         setup { Rack::MockRequest.new(App.new(@config.merge(:ext => 'oxo'))).get('/') }
-
+        
+        should("include 0 articles"){ topic.body }.includes_elements("article", 0)
         asserts("body is not empty") { not topic.body.empty? }
         asserts("return a 200")    { topic.status }.equals 200
       end
@@ -40,6 +41,20 @@ module RubySlippers::Engine
         asserts("body is not empty")  { not topic.body.empty? }
         asserts("content type is set properly") { topic.content_type }.equals "text/html"
         should("include 3 articles"){ topic.body }.includes_elements("article", 3)
+        asserts("Etag header present") { topic.headers.include? "ETag" }
+        asserts("Etag header has a value") { not topic.headers["ETag"].empty? }
+      end
+      
+      context "with a user-defined ext" do
+        setup do
+          @config[:ext] = 'md'
+          @ruby_slippers.get('/')
+        end
+
+        asserts("return a 200") { topic.status }.equals 200
+        asserts("body is not empty"){ not topic.body.empty? }
+        asserts("content type is set properly") { topic.content_type }.equals "text/html"
+        should("include 1 article"){ topic.body }.includes_elements("article", 1)
         asserts("Etag header present") { topic.headers.include? "ETag" }
         asserts("Etag header has a value") { not topic.headers["ETag"].empty? }
       end
